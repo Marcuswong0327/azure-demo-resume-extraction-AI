@@ -2,6 +2,9 @@
 # Legacy .doc: antiword is NOT a pip package — do not add it here. Install via repo packages.txt
 # (line: antiword) for Streamlit Cloud / Linux apt; see package.json description.
 # Optional later: aspose-words-foss (MIT) when PyPI has a wheel for your Python version.
+# Legacy .doc: antiword is NOT a pip package — do not add it here. Install via repo packages.txt
+# (line: antiword) for Streamlit Cloud / Linux apt; see package.json description.
+# Optional later: aspose-words-foss (MIT) when PyPI has a wheel for your Python version.
 streamlit>=1.28.0
 python-dotenv>=1.0.0
 requests>=2.28.0
