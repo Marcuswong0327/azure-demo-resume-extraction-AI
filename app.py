@@ -10,6 +10,7 @@ from text_processor import TextProcessor
 from ai_parser import AIParser
 from excel_exporter import ExcelExporter
 from blob_uploader import BlobUploader
+from word_to_pdf import prepare_archive_payload
 from config import get_claude_api_keys
 import cosmos_store
 import base64
@@ -362,15 +363,18 @@ def process_resumes(uploaded_files, country):
 
                 data = uploaded_file.getvalue()
 
-                # Archive-first: upload to blob storage before extraction
+                # Archive-first: Word → PDF so blob URLs open in the browser; then upload.
                 permanent_url = None
                 blob_path = None
                 if uploader is not None:
                     try:
-                        permanent_url, blob_path = uploader.upsert(
-                            data, uploaded_file.name, country
+                        archive_data, archive_name = prepare_archive_payload(
+                            data, uploaded_file.name
                         )
-                    except Exception as upload_error: #fallback use fileName
+                        permanent_url, blob_path = uploader.upsert(
+                            archive_data, archive_name, country
+                        )
+                    except Exception as upload_error:  # fallback: keep processing
                         st.warning(
                             f"Could not archive {uploaded_file.name}: {upload_error}"
                         )

@@ -8,9 +8,12 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 WORKDIR /app
 
-# System deps: antiword for legacy .doc extraction (see packages.txt).
+# System deps: antiword (.doc text) + LibreOffice (Word → PDF for browser viewing).
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends antiword \
+    && apt-get install -y --no-install-recommends \
+        antiword \
+        libreoffice-writer-nogui \
+        fonts-dejavu-core \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .
